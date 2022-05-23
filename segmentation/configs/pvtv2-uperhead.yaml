@@ -1,0 +1,108 @@
+dataset:
+  data_path: /home/admin_mcn/hungpv/polyps/dataset/KCECE
+  train_data_path:
+    - /home/admin_mcn/hungpv/polyps/dataset/KCECE/TrainDataset
+  test_data_path:
+    # - /home/admin_mcn/hungpv/polyps/dataset/KCECE/TestDataset/CVC-300
+    # - /home/admin_mcn/hungpv/polyps/dataset/KCECE/TestDataset/CVC-ClinicDB
+    # - /home/admin_mcn/hungpv/polyps/dataset/KCECE/TestDataset/CVC-ColonDB
+    - /home/admin_mcn/hungpv/polyps/dataset/KCECE/TestDataset/ETIS-LaribPolypDB
+    # - /home/admin_mcn/hungpv/polyps/dataset/KCECE/TestDataset/Kvasir
+  val_data_path:
+    - /home/admin_mcn/hungpv/polyps/dataset/KCECE/TestDataset/CVC-300
+
+model:
+  num_classes: 1
+  save_dir: /mnt/data/hungpv/polyps/checkpoint/KCECE/pvtv2-uperhead_v8
+  backbone: PVTv2-B3
+  head: UPerHead
+  pretrained: '/mnt/data/hungpv/polyps/pretrained-backbone/pvt_v2_b3.pth'
+
+optimizer:
+  name: adam
+  lr: 0.0001
+  clip: 0.5
+  scheduler: cosine_warmup
+  loss: structure_loss
+
+dev: cuda
+
+train:
+  start_from: 0
+  save_from: 78
+  num_epochs: 80
+  num_warmup_epoch: 10
+  is_val: False
+  size_rates:
+    - 0.75
+    - 1
+    - 1.25
+
+  dataloader:
+    batchsize: 16
+    img_size: 352
+    shuffle: True
+    num_workers: 2
+    pin_memory: True
+    drop_last: True
+
+  amp: False
+  ddp: False
+
+  augment:
+    prob: 1
+    Flip_prob: 0.7
+    HueSaturationValue_prob: 0.7
+    RandomBrightnessContrast_prob: 0.5
+    crop_prob: 0.0
+    randomrotate90_prob: 0.7
+    # elastictransform_prob: 0.7
+    # gridistortion_prob: 0.7
+    # opticaldistortion_prob: 0.7
+    # verticalflip_prob: 0.7
+    # horizontalflip_prob: 0.7
+    # randomgamma_prob: 0.7
+    # CoarseDropout_prob: 0.7
+    # RGBShift_prob: 0.7
+    # MotionBlur_prob: 0.7
+    # MedianBlur_prob: 0.7
+    # GaussianBlur_prob: 0.7
+    # GaussNoise_prob: 0.7
+    # ChannelShuffle_prob: 0.7
+
+test:
+  dev: cuda
+  visualize: False
+  visualize_dir: '/mnt/data/hungpv/polyps/visualize'
+  vis_x: 180
+  vis_overwrite: False
+  checkpoint_dir: '/mnt/data/hungpv/polyps/checkpoint/KCECE/pvtv2-uperhead_v8/PVTv2-B3-UPerHead_80.pth'
+  dataloader:
+    batchsize: 1
+    img_size: 352 
+    shuffle: True
+    num_workers: 2
+    pin_memory: True
+    drop_last: True
+
+  augment:
+
+    prob: 1
+    Flip_prob: 0
+    HueSaturationValue_prob: 0
+    RandomBrightnessContrast_prob: 0
+    crop_prob: 0
+    randomrotate90_prob: 0
+    elastictransform_prob: 0
+    gridistortion_prob: 0
+    opticaldistortion_prob: 0
+    verticalflip_prob: 0
+    horizontalflip_prob: 0
+    randomgamma_prob: 0
+    CoarseDropout_prob: 0
+    RGBShift_prob: 0
+    MotionBlur_prob: 0
+    MedianBlur_prob: 0
+    GaussianBlur_prob: 0
+    GaussNoise_prob: 0
+    ChannelShuffle_prob: 0

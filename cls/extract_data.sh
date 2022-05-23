@@ -1,0 +1,1 @@
+python preprocess.py --train_dir ./dataset/video_dataset --test_dir ./dataset/private_test/video_dataset --train_save_dir ./dataset/frame_dataset/train --test_save_dir ./dataset/private_test/frame_dataset

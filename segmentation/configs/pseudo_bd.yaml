@@ -1,0 +1,127 @@
+dataset:
+  data_path: /home/admin_mcn/hungpv/polyps/dataset/BD/5folds
+  train_data_path:
+    - /home/admin_mcn/hungpv/polyps/dataset/BD/5folds/fold0
+    - /home/admin_mcn/hungpv/polyps/dataset/BD/5folds/fold1
+    - /home/admin_mcn/hungpv/polyps/dataset/BD/5folds/fold2
+    - /home/admin_mcn/hungpv/polyps/dataset/BD/5folds/fold3
+    - /mnt/data/hungpv/bd/gesgendata/pseudo_labels
+  test_data_path:
+    - /mnt/data/hungpv/bd/gesgendata/train
+  val_data_path:
+    - /home/admin_mcn/hungpv/polyps/dataset/BD/5folds/fold4
+
+model:
+  num_classes: 1
+  save_dir: /mnt/data/hungpv/bd/checkpoint/efficientnet-b6-unetpp-fold4_v1
+  backbone: timm-efficientnet-b6
+  head: UnetPlusPlus
+  pretrained: 'imagenet'
+  # checkpoint: '/home/admin_mcn/hungpv/polyps/pretrained-backbone/tf_efficientnet_b6.pth'
+  checkpoint: '/mnt/data/hungpv/bd/checkpoint/efficientnet-b6-unetpp-fold4_v1/timm-efficientnet-b6-UnetPlusPlus_best.pth'
+  # pretrained: '/home/admin_mcn/.cache/torch/hub/checkpoints/tf_efficientnet_b6_aa-80ba17e4.pth'
+
+optimizer:
+  name: adam
+  lr: 0.0001
+  clip: 0.5
+  scheduler: cosine_warmup
+  loss: structure_ssim_loss
+
+dev: cuda
+
+train:
+  pseudo: True
+  start_from: 0
+  save_from: 9
+  num_epochs: 10
+  num_warmup_epoch: 4
+  is_val: True
+  size_rates:
+    # - 0.75
+    - 1
+    # - 1.25
+
+  dataloader:
+    batchsize: 20
+    img_size: 256
+    shuffle: True
+    num_workers: 4
+    pin_memory: True
+    drop_last: True
+
+  amp: False
+  ddp: False
+
+  augment:
+    prob: 1
+    Flip_prob: 0.5
+    HueSaturationValue_prob: 0.5
+    RandomBrightnessContrast_prob: 0.5
+    crop_prob: 0.0
+    # randomrotate90_prob: 0.7
+    # elastictransform_prob: 0.7
+    # gridistortion_prob: 0.7
+    # opticaldistortion_prob: 0.7
+    # verticalflip_prob: 0.7
+    # horizontalflip_prob: 0.7
+    # randomgamma_prob: 0.7
+    # CoarseDropout_prob: 0.7
+    # RGBShift_prob: 0.7
+    # MotionBlur_prob: 0.7
+    # MedianBlur_prob: 0.7
+    # GaussianBlur_prob: 0.7
+    # GaussNoise_prob: 0.7
+    # ChannelShuffle_prob: 0.7
+
+test:
+  ensemble: True
+  dev: cuda
+  visualize: False
+  visualize_dir: '/mnt/data/hungpv/polyps/visualize'
+  vis_x: 180
+  vis_overwrite: False
+  checkpoint_dir: '/mnt/data/hungpv/bd/checkpoint/efficientnet-b6-unetpp-fold4_v1/timm-efficientnet-b6-UnetPlusPlus_best.pth'
+  csv_save: '/home/admin_mcn/hungpv/polyps/code/bd-segmentation/csv'
+  checkpoint_ens:
+    - /mnt/data/hungpv/bd/checkpoint/efficientnet-b6-unetpp-fold4_v1/timm-efficientnet-b6-UnetPlusPlus_best.pth
+  pseudo_images: /mnt/data/hungpv/bd/gesgendata/pseudo_labels/images
+  pseudo_masks: /mnt/data/hungpv/bd/gesgendata/pseudo_labels/masks
+  dataloader:
+    batchsize: 1
+    img_size: 256 
+    shuffle: False
+    num_workers: 2
+    pin_memory: True
+    drop_last: True
+  
+
+
+  augment:
+
+    prob: 1
+    Flip_prob: 0
+    HueSaturationValue_prob: 0
+    RandomBrightnessContrast_prob: 0
+    crop_prob: 0
+    randomrotate90_prob: 0
+    elastictransform_prob: 0
+    gridistortion_prob: 0
+    opticaldistortion_prob: 0
+    verticalflip_prob: 0
+    horizontalflip_prob: 0
+    randomgamma_prob: 0
+    CoarseDropout_prob: 0
+    RGBShift_prob: 0
+    MotionBlur_prob: 0
+    MedianBlur_prob: 0
+    GaussianBlur_prob: 0
+    GaussNoise_prob: 0
+    ChannelShuffle_prob: 0
+
+gen:
+  phase: 'test'
+  train_data_path: '/mnt/data/hungpv/bd/gesdata/train'
+  test_data_path: '/mnt/data/hungpv/bd/gesdata/test'
+  save_test_data: '/mnt/data/hungpv/bd/gesgendata/test'
+  save_train_data: '/mnt/data/hungpv/bd/gesgendata/train'

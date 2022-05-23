@@ -1,0 +1,1 @@
+CUDA_VISIBLE_DEVICES=0 python ensemble_smp.py -c configs/default.yaml
