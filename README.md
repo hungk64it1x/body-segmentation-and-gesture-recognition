@@ -93,13 +93,13 @@ bash gen_masks_smp.sh
     + phase: train hoặc test (phải sinh cả 2 để làm đầu vào cho task còn lại)
     + train_data_path: dữ liệu train của task còn lại
     + test_data_path: dữ liệu test của task còn lại
-    + save_train_data: thư mục lưu dữ liệu mới tạo ra (mặc định là gr-classification/dataset/segment_dataset)
+    + save_train_data: thư mục lưu dữ liệu mới tạo ra (mặc định là cls/dataset/segment_dataset)
     + save_test_data: tương tự train...
 + Sinh file rle để nộp lên hệ thống:
 ```
 bash gen_rle.sh
 ```
-Sau khi chạy câu lệnh này thì trong mục bd-segmentation/csv sẽ xuất hiện file sub1.csv, copy file này cho vào thư mục output
+Sau khi chạy câu lệnh này thì trong mục segmentation/csv sẽ xuất hiện file sub1.csv, copy file này cho vào thư mục output
 #### 3.2 Task gesture recognition
 ```
 cd cls
