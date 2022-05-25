@@ -15,9 +15,9 @@
 $ conda create -n envs python=3.9.7
 $ conda activate envs
 $ conda install -c conda-forge gdcm
-$ cd gr-classification
+$ cd cls
 $ pip install -r requirements.txt
-$ cd bd-segmentation
+$ cd segmentation
 $ pip install -r requirements.txt 
 ```
 -----------------------------------------------------------------------
