@@ -89,7 +89,7 @@ bash train.sh
 ```
 bash gen_masks_smp.sh
 ```
-+ Nếu lúc chạy sinh nhãn có lỗi thì kiểm tra lại 2 file config gen-ges-test-mask.yaml và gen-ges-train-mask.yaml trong thư mục bd-segmentation/configs và sửa lại đường dẫn theo hướng dẫn sau:
++ Nếu lúc chạy sinh nhãn có lỗi thì kiểm tra lại 2 file config gen-ges-test-mask.yaml và gen-ges-train-mask.yaml trong thư mục segmentation/configs và sửa lại đường dẫn theo hướng dẫn sau:
     + phase: train hoặc test (phải sinh cả 2 để làm đầu vào cho task còn lại)
     + train_data_path: dữ liệu train của task còn lại
     + test_data_path: dữ liệu test của task còn lại
