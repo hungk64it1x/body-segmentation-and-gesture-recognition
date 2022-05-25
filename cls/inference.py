@@ -109,7 +109,7 @@ class CFG:
     trn_fold = {  
         "dm_nfnet_f0": {
 #             "best": [0, 1, 2, 3, 4],
-            "best": [0],
+            "best": [0, 1, 2],
             "final": [],
             "weight": [0.5, 0.5, 0.8, 0.05, 0.05]
         },
